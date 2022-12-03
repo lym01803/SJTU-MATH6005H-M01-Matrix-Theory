@@ -1,0 +1,158 @@
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance,mathtools}
+\usepackage{wrapfig}
+\usepackage{mathrsfs, euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{setspace}
+%\usepackage{subcaption}
+\usepackage{float}
+\usepackage{listings}
+%\usepackage{enumerate}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage[vlined,ruled,commentsnumbered,linesnumbered]{algorithm2e}
+\usepackage[ruled,lined,boxed,linesnumbered]{algorithm2e}
+\usepackage{tikz}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\renewenvironment{solution}[1][Solution]{~\\ \textbf{#1.}}{~\\}
+
+\newcommand{\prob}{\mathtt{Pr}}
+
+\newcommand{\postscript}[2]
+    {\setlength{\epsfxsize}{#2\hsize}
+    \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+\SetKwFor{Function}{function}{:}{end}
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+
+\title{矩阵理论 作业3}
+\author{刘彦铭\ \ 学号:122033910081}
+\date{编辑日期:\ \today}
+
+\begin{document}
+
+\maketitle
+
+2.1节：3；
+
+2.2节：1，2，3
+
+\begin{spacing}{1.5}
+\begin{itemize}
+
+    \item 2.1 - 习题3
+    
+    对矩阵 $A$ 模拟高斯消元过程可以知道，需要将原第2行置于第1行，将原第1行置于第2行，于是可以得到可行的置换矩阵 $P = \left(\begin{array}{ccc}0&1&0\\1&0&0\\0&0&1\end{array}\right)$
+    
+    对 $PA$ 模拟高斯消元过程可得 :
+    $$
+    \begin{array}{ll}
+        PA = \left(\begin{array}{ccc}1&2&3\\0&1&1\\1&2&4\end{array}\right)
+           &= \left(\begin{array}{ccc}1&0&0\\0&1&0\\-1&0&1\end{array}\right)^{-1}\times 
+              \left(\begin{array}{ccc}1&2&3\\0&1&1\\0&0&1\end{array}\right)\\
+           &= \left(\begin{array}{ccc}1&0&0\\0&1&0\\1&0&1\end{array}\right)\times 
+              \left(\begin{array}{ccc}1&2&3\\0&1&1\\0&0&1\end{array}\right)\\
+    \end{array}
+    $$
+
+    于是 $L = \left(\begin{array}{ccc}1&0&0\\0&1&0\\1&0&1\end{array}\right)$, $U=\left(\begin{array}{ccc}1&2&3\\0&1&1\\0&0&1\end{array}\right)$.
+
+    \item 2.2 - 习题1
+    
+    交换1，3两列，并选取前两列作为列向量的极大无关组。有：$P = \left(\begin{array}{cccc}0&0&1&0\\0&1&0&0\\1&0&0&0\\0&0&0&1\end{array}\right)$
+    $AP = \left(\begin{array}{cccc}1&0&2&1\\-1&-1&-1&-1\\0&-1&1&0\\-1&-2&0&-1\end{array}\right)$
+    对前两列做Schmidt正交化，再单位化，得到：
+
+    $$
+    AP = \left(\begin{array}{cc}
+        \dfrac{1}{\sqrt 3} & \dfrac{1}{\sqrt 3}\\
+        -\dfrac{1}{\sqrt 3} & 0\\
+        0 & \dfrac{1}{\sqrt 3}\\
+        -\dfrac{1}{\sqrt 3} & \dfrac{1}{\sqrt 3}\\
+    \end{array}\right)
+    \times 
+    \left(\begin{array}{cccc}
+        \sqrt{3} & \sqrt{3} & \sqrt{3} & \sqrt{3}\\
+        0 & -\sqrt{3} & \sqrt{3} & 0\\
+    \end{array}\right)
+    = QR
+    $$
+
+    \item 2.2 - 习题2
+    
+    $A = \left(\begin{array}{cccc}2&0&1&1\\-1&-1&-1&-1\\1&-1&0&0\\0&-2&-1&-1\end{array}\right)$.
+    对于 $A$ 的第一列, $A_{:,1} = (-2, -1, 1, 0)^\top$, 我们希望构造 酉矩阵 $U_1$ 使得 $U_1 A_{:,1} = (||A_{:,1}||, 0, 0, 0)^\top$.
+    根据镜面反射矩阵的相关性质，设 单位向量 $\beta = \dfrac{A_{:, 1}}{||A_{:,1}||}$，$\epsilon = (1, 0, 0, 0)^\top$, 则可构造 $U_1 = E - \dfrac{2}{||\beta-\epsilon||^2}(\beta\beta^\top - \epsilon\beta^\top - \beta\epsilon^\top + \epsilon\epsilon^\top)$.
+    计算过程较繁，这里给出化简结果: $$U_1 = \dfrac{1}{6-2\sqrt{6}}\times
+    \left(\begin{array}{cccc}
+        -4+2\sqrt{6}&2-\sqrt{6}&-2+\sqrt{6}&0\\
+        2-\sqrt{6}&5-2\sqrt{6}&1&0\\
+        -2+\sqrt{6}&1&5-2\sqrt{6}&0\\
+        0&0&0&6-2\sqrt{6} \\
+    \end{array}\right)$$
+    计算得到 $$U_1A = \left(\begin{array}{cccc}
+        \sqrt{6} & 0 & \sqrt{6}/2 & \sqrt{6}/2\\
+        0 & -1 & -\frac{1}{2} & -\frac{1}{2} \\
+        0 & -1 & -\frac{1}{2} & -\frac{1}{2} \\
+        0 & -2 & -1 & -1 \\
+    \end{array}\right)$$
+
+    完全类似地，取 $\beta = \dfrac{1}{\sqrt 6}(-1, -1, -2)^\top$, $\epsilon = (1, 0, 0)^\top$, 计算得到 $3$ 阶的 $U_2$， 
+    $$U_2=\dfrac{1}{6+\sqrt{6}}\times
+    \left(\begin{array}{ccc}
+        -1-\sqrt{6} & -1-\sqrt{6} & -2-2\sqrt{6}\\
+        -1-\sqrt{6} & 5+\sqrt{6} & -2 \\
+        -2-2\sqrt{6} & -2 & 2+\sqrt 6 \\
+    \end{array}\right)$$
+
+    那么 $U_2A_{1:3, 1:3} = \left(
+        \begin{array}{ccc}
+            \sqrt{6} & \frac{\sqrt{6}}{2} & \frac{\sqrt{6}}{2}\\
+            0 & 0 & 0\\
+            0 & 0 & 0\\
+        \end{array}
+    \right)$，已经是上三角矩阵。
+    这就找到了 $A$ 的第二广义QR分解，$A=QR$, 其中 
+    $R = \left(\begin{array}{cccc}
+        \sqrt{6} & 0 & \sqrt{6}/2 & \sqrt{6}/2\\
+        0 & \sqrt{6} & \sqrt{6}/2 & \sqrt{6}/2\\
+        0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0\\
+    \end{array}\right) $, $Q = \left(\left(\begin{array}{cc}1&0\\0&U_2\end{array}\right)U_1\right)^{-1} = U_1^{-1}\left(\begin{array}{cc}1&0\\0&U_2^{-1}\end{array}\right)$.
+    
+    \item 2.2 - 习题3
+    
+    定理2.2.3可推广至非方阵的情形：
+
+    任一矩阵 $A_{n\times m}$ 具有$QR$-分解，其中 $Q$ 是 $n$ 阶酉矩阵，而 $R$ 是 $n\times m$ 的上三角矩阵，且主对角线元素是非负实数。
+
+    证明过程，可以完全仿照定理2.2.3，即不断运用引理2.2.2逐一消去矩阵 $A_{n\times m}$ 的列。矩阵是否是方阵，完全不影响引理2.2.2的使用。
+
+    唯一的区别在于，当矩阵 $A_{n\times m}$ 消去 $\min\{n,m\}$ 列后，不能再继续像定理2.2.3证明中那样对剩余的子矩阵分块，所以至多只能消掉
+    前$\min\{n,m\}$列中对角线以下的部分，但这不影响 $Q$ 是酉矩阵以及 $R$ 是非方形的上三角矩阵且对角线元素是非负实数。
+
+\end{itemize}
+\end{spacing}
+
+
+\end{document}

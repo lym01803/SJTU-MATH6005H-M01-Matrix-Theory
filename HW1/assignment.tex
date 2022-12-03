@@ -1,0 +1,345 @@
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance,mathtools}
+\usepackage{wrapfig}
+\usepackage{mathrsfs, euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{setspace}
+%\usepackage{subcaption}
+\usepackage{float}
+\usepackage{listings}
+%\usepackage{enumerate}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage[vlined,ruled,commentsnumbered,linesnumbered]{algorithm2e}
+\usepackage[ruled,lined,boxed,linesnumbered]{algorithm2e}
+\usepackage{tikz}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\renewenvironment{solution}[1][Solution]{~\\ \textbf{#1.}}{~\\}
+
+\newcommand{\prob}{\mathtt{Pr}}
+
+\newcommand{\postscript}[2]
+    {\setlength{\epsfxsize}{#2\hsize}
+    \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+\SetKwFor{Function}{function}{:}{end}
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+
+\title{矩阵理论 作业1}
+\author{刘彦铭\ \ 学号:122033910081}
+\date{编辑日期:\ \today}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Page 5 习题1
+    
+    从镜面反射变换的几何意义来看：
+        \begin{figure}[htb]
+            \centering 
+            \begin{tikzpicture}
+                \node (C) at (4, 4) {$C$};
+                \node (A) at (8, 2) {$A$};
+                \node (B) at (0, 2) {$B$};
+                \node (O) at (4, 0) {$O$};
+                \node (M) at (4, 2) {$M$};
+
+                \draw [->] (A) -- node[right]{$(1, 1, 1, 1)^\top$} (O);
+                \draw [->] (O) -- node[left]{$(1, 0, 0, \sqrt3)^\top$} (B);
+                \draw [->] (O) -- (C);
+            \end{tikzpicture}
+        \end{figure}
+    
+    镜面方向上的 $\alpha$ 与 $\overrightarrow{OC} = \overrightarrow{OB} + \overrightarrow{OA} = \overrightarrow{OB} - \overrightarrow{AO} = (0, -1, -1, \sqrt3-1)^\top$ 同方向
+    
+    故单位向量 $\alpha=\dfrac{\overrightarrow{OC}}{|\overrightarrow{OC}|}=\dfrac{1}{\sqrt{6-2\sqrt3}}(0, -1, -1, \sqrt3 - 1)^\top$
+
+    所以 
+    $$B=E-2\alpha\alpha^T=\dfrac{1}{3 - \sqrt 3}\left[\begin{array}{cccc}
+        3 - \sqrt 3 & 0 & 0 & 0 \\
+        0 & 2 - \sqrt 3 & -1 & \sqrt 3 - 1 \\
+        0 & -1 & 2 -\sqrt 3 & \sqrt 3 - 1 \\
+        0 & \sqrt 3 - 1 & \sqrt 3 - 1 & \sqrt 3 - 1    
+    \end{array}\right]$$
+
+    \item Page 11 习题1 
+    
+    可将该矩阵分解为行变换矩阵和分块对角阵的乘积：
+    \begin{equation*}
+        \left[
+            \begin{array}{ccc}
+                0 & B & 0 \\
+                E & 0 & 0 \\
+                0 & 0 & A \\
+            \end{array}
+        \right]
+        = 
+        \left[
+            \begin{array}{ccc}
+                0 & E & 0 \\
+                E & 0 & 0 \\
+                0 & 0 & E \\
+            \end{array}
+        \right]
+        \times
+        \left[
+            \begin{array}{ccc}
+                E & 0 & 0 \\
+                0 & B & 0 \\
+                0 & 0 & A \\
+            \end{array}
+        \right]
+    \end{equation*}
+    故其逆矩阵为 
+    \begin{equation*}
+        \left[
+            \begin{array}{ccc}
+                0 & B & 0 \\
+                E & 0 & 0 \\
+                0 & 0 & A \\
+            \end{array}
+        \right]^{-1}
+        =
+        \left[
+            \begin{array}{ccc}
+                E & 0 & 0 \\
+                0 & B^{-1} & 0 \\
+                0 & 0 & A^{-1} \\
+            \end{array}
+        \right]
+        \times
+        \left[
+            \begin{array}{ccc}
+                0 & E & 0 \\
+                E & 0 & 0 \\
+                0 & 0 & E \\
+            \end{array}
+        \right]
+        =
+        \left[
+            \begin{array}{ccc}
+                0 & E & 0 \\
+                B^{-1} & 0 & 0 \\
+                0 & 0 & A^{-1} \\
+            \end{array}
+        \right]
+    \end{equation*}
+    行列式：
+    \begin{equation*}
+        \left|
+            \begin{array}{ccc}
+                0 & B & 0 \\
+                E & 0 & 0 \\
+                0 & 0 & A \\
+            \end{array}
+        \right|
+        = 
+        \left|
+            \begin{array}{ccc}
+                0 & E & 0 \\
+                E & 0 & 0 \\
+                0 & 0 & E \\
+            \end{array}
+        \right|
+        \times
+        \left|
+            \begin{array}{ccc}
+                E & 0 & 0 \\
+                0 & B & 0 \\
+                0 & 0 & A \\
+            \end{array}
+        \right|
+        = (-1)^{n}\cdot \det(A)\cdot\det(B)
+    \end{equation*}
+    \item Page 11 习题3
+    
+    注意到对该方阵进行行变换可以得到 
+    \begin{equation*}
+        \left[
+            \begin{array}{cc}
+                E & 0 \\
+                -C & E \\
+            \end{array}
+        \right]
+        \times
+        \left[
+            \begin{array}{cc}
+                A^{-1} & 0 \\
+                0 & E_m \\
+            \end{array}
+        \right]
+        \times
+        \left[
+            \begin{array}{cc}
+                A & B \\
+                C & D_m
+            \end{array}
+        \right]
+        = 
+        \left[
+            \begin{array}{cc}
+                E & A^{-1}B \\
+                0 & D_m - CA^{-1}B \\
+            \end{array}
+        \right]
+    \end{equation*}
+    上式中左边两个行变换矩阵均满秩，故 $H=\left[\begin{array}{cc}A&B\\C&D_m\\\end{array}\right]$ 可逆的充要条件为
+    \begin{equation*}
+        \left|
+            \begin{array}{cc}
+                E & A^{-1}B \\
+                0 & D_m - CA^{-1}B \\
+            \end{array}
+        \right|
+        = \det(D_m - CA^{-1}B)\ne 0
+    \end{equation*}
+    (1) 由上述讨论知，充要条件是 $m$ 阶方阵 $D_m-CA^{-1}B$ 可逆；
+    
+    (2) 简单起见，令 $D^\prime=D_m-CA^{-1}B$, $H$可逆时， $D^{\prime-1}$ 唯一存在。
+    注意到，运用行变换有:
+
+    \begin{equation*}
+        \left[
+            \begin{array}{cc}
+                E & -A^{-1}B \\
+                0 & E \\
+            \end{array}
+        \right]
+        \times
+        \left[
+            \begin{array}{cc}
+                E & 0 \\
+                0 & D^{\prime-1} \\
+            \end{array}
+        \right] 
+        \times 
+        \left[
+            \begin{array}{cc}
+                E & A^{-1}B \\
+                0 & D^\prime \\
+            \end{array}
+        \right]
+        = E_{n+m}
+    \end{equation*}
+    所以 
+    \begin{spacing}{1.5}
+    \begin{equation*}
+        \begin{array}{ll}
+            H^{-1} & = 
+            \left[
+                \begin{array}{cc}
+                    E & -A^{-1}B \\
+                    0 & E \\
+                \end{array}
+            \right]
+            \times
+            \left[
+                \begin{array}{cc}
+                    E & 0 \\
+                    0 & D^{\prime-1} \\
+                \end{array}
+            \right] 
+            \times
+            \left[
+                \begin{array}{cc}
+                    E & 0 \\
+                    -C & E \\
+                \end{array}
+            \right]
+            \times
+            \left[
+                \begin{array}{cc}
+                    A^{-1} & 0 \\
+                    0 & E_m \\
+                \end{array}
+            \right] \\
+            & = 
+            \left[
+                \begin{array}{cc}
+                    A^{-1} + A^{-1}B(D_m-CA^{-1}B)^{-1}CA^{-1} & -A^{-1}B(D_m-CA^{-1}B)^{-1} \\
+                    -(D_m-CA^{-1}B)^{-1}CA^{-1} & (D_m-CA^{-1}B)^{-1}\\
+                \end{array}
+            \right]
+        \end{array}
+    \end{equation*}
+    \end{spacing}
+    非常丑，但验证了一下应该是对的。左上角似乎和Woodbury公式的形式是一致的。
+    
+    \item Page 12 习题6
+    
+    考虑当 $A\in \mathbb{R}^{n\times n}$ 时，对任意列向量 $x^\prime=\left[x^\top; y\right]^\top\in\mathbb{R}^{(n+1)\times 1}$, 其中 $x\in\mathbb{R}^{n\times 1}, y\in\mathbb{R}$:
+
+    计算得到
+
+    \begin{spacing}{1.5}
+        
+    \begin{equation*}
+        \begin{array}{ll}
+            f(x^\prime)=x^{\prime\top}\left[\begin{array}{cc}A&k\alpha\\k\alpha^\top&1\\\end{array}\right]x^\prime 
+            &= 
+            \left[x^\top; y\right]\left[\begin{array}{cc}A&k\alpha\\k\alpha^\top&1\\\end{array}\right]\left[\begin{array}{c}x\\y\end{array}\right]
+            \\
+            &= x^\top Ax + 2ky(x^\top\alpha)+y^2
+            \\
+            &= \left(y + k(x^\top\alpha)\right)^2 + x^\top Ax - k^2(x^\top\alpha x^\top\alpha)\\
+            &= \left(y + k(x^\top\alpha)\right)^2 + x^\top (A - k^2\alpha\alpha^\top) x
+
+        \end{array}
+    \end{equation*}
+
+    \end{spacing}
+
+    \begin{itemize}
+        \item [-] 若 $A-k^2\alpha\alpha^\top$ 是正定矩阵，那么 $\left[\begin{array}{cc}A&k\alpha\\k\alpha^\top&1\\\end{array}\right]$ 正定。因为：
+        \begin{itemize}
+            \item [--] 一方面 $f(x^\prime)\geq 0$ 恒成立;
+            \item [--] 另一方面, $f(x^\prime)=0$ 可以推出 $x=0, y=0, x^\prime=0$.
+        \end{itemize}
+        \item [-] 若 $A-k^2\alpha\alpha^\top$ 是半正定矩阵，那么 $\left[\begin{array}{cc}A&k\alpha\\k\alpha^\top&1\\\end{array}\right]$ 半正定。因为：
+        \begin{itemize}
+            \item [--] 一方面 $f(x^\prime)\geq 0$ 恒成立;
+            \item [--] 另一方面, 由于存在$x\ne 0$ 使得 $x^\top (A-k^2\alpha\alpha^\top)x =0$, 取 $y=-k(x^\top\alpha)$ 即得到非零的 $x^\prime$ 使得 $f(x^\prime)=0$.
+        \end{itemize}
+        \item [-] 若 $A-k^2\alpha\alpha^\top$ 是不定矩阵，那么 $\left[\begin{array}{cc}A&k\alpha\\k\alpha^\top&1\\\end{array}\right]$ 也是不定的。因为：
+        此时 $A-k^2\alpha\alpha^\top$ 存在小于 $0$ 的特征值，取 $x$ 为其对应的特征向量，取 $y=-k(x^\top\alpha)$ 即构造得到 $x^\prime$, $f(x^\prime) < 0$.
+    \end{itemize}
+
+
+    \item Page 13 习题7
+    
+    方便起见，令 $C=AB\in\mathbb{F}^{m\times r}$, 直接计算验证：对于任一 $1\leq k\leq r$,
+    \begin{equation*}
+        \begin{array}{ll}
+            \sum_{1\leq i\leq m} C_{ik} & = \sum_{1\leq i\leq m} \sum_{1\leq j\leq n} A_{ij}\times B_{jk} \\
+            & = \sum_{1\leq j\leq n} \sum_{1\leq i\leq m} A_{ij}\times B_{jk} \\
+            & = \sum_{1\leq j\leq n} B_{jk}\times\left(\sum_{1\leq i\leq m} A_{ij}\right) \\
+            & = \sum_{1\leq j\leq n} B_{jk} \times a \\ 
+            & = ab
+        \end{array}
+    \end{equation*}
+
+\end{enumerate}
+
+\end{document}

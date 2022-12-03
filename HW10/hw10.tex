@@ -1,0 +1,87 @@
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance,mathtools}
+\usepackage{wrapfig}
+\usepackage{mathrsfs, euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{setspace}
+%\usepackage{subcaption}
+\usepackage{float}
+\usepackage{listings}
+%\usepackage{enumerate}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage[vlined,ruled,commentsnumbered,linesnumbered]{algorithm2e}
+\usepackage[ruled,lined,boxed,linesnumbered]{algorithm2e}
+\usepackage{tikz}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\renewenvironment{solution}[1][Solution]{~\\ \textbf{#1.}}{~\\}
+
+\newcommand{\prob}{\mathtt{Pr}}
+
+\newcommand{\postscript}[2]
+{\setlength{\epsfxsize}{#2\hsize}
+\centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+\SetKwFor{Function}{function}{:}{end}
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+
+\title{矩阵理论\ 作业10}
+\author{刘彦铭\ \ ID: 122033910081}
+\date{Last Edited:\ \today}
+
+\begin{document}
+
+\maketitle
+
+\begin{spacing}{1.5}
+    
+\begin{itemize}
+    \item [1.] 习题 1
+    
+    $A = \left[\begin{array}{cccc}3&-1&0&0\\1&1&0&0\\3&0&5&-3\\4&-1&3&-1\end{array}\right]$ 首先求其Jordan标准型：容易计算 $\det(xE-A) = (x-2)^4$. 考虑 
+    
+    $B = A - 2E = \left[\begin{array}{cccc}1&-1&0&0\\1&-1&0&0\\3&0&3&-3\\4&-1&3&-3\end{array}\right]$, $B^2 = O$. 求得 $Bx=0$ 的解空间上的一组基 $\alpha_1 = [-1, -1, 0, -1]^\top, \alpha_2=[0, 0, 3, 3]^\top$. 容易构造 $\beta_1 = [0, 1, 0, 0]^\top, \beta_2 = [0, 0, 1, 0]^\top$ 使 $B\beta_1 = \alpha_1, B\beta_2 = \alpha_2$. 容易验证 $\beta_1, \beta_2, \alpha_1, \alpha_2$ 线性无关，故构造得到 $S = [\alpha_1, \beta_1, \alpha_2, \beta_2] = \left[\begin{array}{cccc}-1&0&0&0\\-1&1&0&0\\0&0&3&1\\-1&0&3&0\end{array}\right]$. 求得 $S^{-1} = \left[\begin{array}{cccc}-1&0&0&0\\-1&1&0&0\\-1/3&0&0&1/3\\1&0&1&-1\end{array}\right]$. 从而 $S^{-1}AS = J = \left[\begin{array}{cccc}2&1&&\\&2&&\\&&2&1\\&&&2\end{array}\right] = 2E + B_1$. 其中 $B_1$ 是幂零的Jordan阵, $B_1^2=O$.
+
+    \begin{itemize}
+        \item [(1)] $\sin(2 + x) = \sin(2) + \cos(2) \cdot x - \dfrac{\sin(2)}{2}x^2 + \cdots$, $\sin(J) = \sin(2 E + B_1) = \sin(2)E + \cos(2) B_1$. 
+        
+        $\sin(A) = S \cdot \sin(J) \cdot S^{-1} = S \cdot \left[\begin{array}{cccc}\sin(2)&\cos(2)&&\\&\sin(2)&&\\&&\sin(2)&\cos(2)\\&&&\sin(2)\end{array}\right] \cdot S^{-1}$
+
+        由于 $\sin A = (\sin 2) SES^{-1} + (\cos 2) SB_1S^{-1} = (\sin 2) E + (\cos 2) (A - 2E)$，
+
+        具体计算可得 $\sin(A) = \left[\begin{array}{cccc}\sin 2 + \cos 2&-\cos 2&0&0\\\cos 2&-\cos 2 + \sin 2 & 0 & 0\\3\cos 2&0&3\cos 2 + \sin 2& -3\cos 2\\4\cos 2&-\cos 2&3\cos 2&\sin 2 - 3\cos 2\end{array}\right]$.
+
+        
+        \item [(2)] $\mathtt{e}^J = \mathtt{e}^{2}(E + B_1) = \mathtt{e}^{2} \left[\begin{array}{cccc}1&1&&\\&1&&\\&&1&1\\&&&1\end{array}\right]$, $\mathtt{e}^{A} = S\cdot \mathtt{e}^{J}\cdot S^{-1}$.
+
+        由于 $\mathtt{e}^A = \mathtt{e}^2 \cdot S(E+B_1)S^{-1} = \mathtt{e}^2 (E + A - 2E) = \mathtt{e}^2 (A - E)$，
+
+        具体计算可得 $\mathtt{e}^A = \mathtt{e}^2\cdot \left[\begin{array}{cccc}2&-1&0&0\\1&0&0&0\\3&0&4&-3\\4&-1&3&-2\end{array}\right]$.
+
+    \end{itemize}
+
+\end{itemize}
+
+\end{spacing}
+
+\end{document}

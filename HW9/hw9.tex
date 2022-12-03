@@ -1,0 +1,150 @@
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance,mathtools}
+\usepackage{wrapfig}
+\usepackage{mathrsfs, euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{setspace}
+%\usepackage{subcaption}
+\usepackage{float}
+\usepackage{listings}
+%\usepackage{enumerate}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage[vlined,ruled,commentsnumbered,linesnumbered]{algorithm2e}
+\usepackage[ruled,lined,boxed,linesnumbered]{algorithm2e}
+\usepackage{tikz}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\renewenvironment{solution}[1][Solution]{~\\ \textbf{#1.}}{~\\}
+
+\newcommand{\prob}{\mathtt{Pr}}
+
+\newcommand{\postscript}[2]
+{\setlength{\epsfxsize}{#2\hsize}
+\centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+\SetKwFor{Function}{function}{:}{end}
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+
+\title{矩阵理论\ 作业9}
+\author{刘彦铭\ \ ID: 122033910081}
+\date{Last Edited:\ \today}
+
+\begin{document}
+
+\maketitle
+
+
+
+\begin{spacing}{1.5}
+\begin{itemize}
+    \item [1.] 59页 习题4 
+    
+    \begin{lemma}
+        正交矩阵可以由若干镜面反射矩阵相成得到
+    \end{lemma}
+    \begin{proof}
+        设 $Q\in M_n(\mathbb{R})$， $Q=(q_1, q_2, \cdots, q_n)$. 由于 $(q_1, q_1) = 1$, 故存在镜面反射矩阵 $U_1$ 使得 $U_1 q_1 = e_1 := (1, 0, \cdots, 0)^\top$. 对于任意 $j\ne 1$, $(U_1q_j, U_1q_1) = q_j^\top U_1U_1 q_1 = q_j^\top q_1 = 0$, 所以 $U_1q_j = (0, *, \cdots, *)^\top$, 即第一个分量必然为 $0$. 从而有 $$U_1Q = (U_1q_1, U_1q_2, \cdots, U_1q_n) = \left[\begin{array}{cc}1&0\\0&Q^\prime\end{array}\right]$$
+
+        由于镜面反射变换不改变内积，即 $(U_1q_i, U_1q_j) = (q_i, q_j)$， 故 $Q^\prime$ 是 $n-1$ 阶的正交矩阵。归纳地进行下去即可得到 $U_{n-1}\cdots U_2U_1Q = E_n$, 即 $Q = U_1U_2\cdots U_{n-1}$.
+    \end{proof}
+
+    对于 正交变换 $\sigma$ 它在 $V$ 的一组标准正交基 $\eta_1, \cdots, \eta_n$ 下对应于 矩阵 $Q$, 容易验证 $Q$ 是正交矩阵。
+
+    那么 $\sigma(\eta_1, \cdots, \eta_n) = (\eta_1, \cdots, \eta_n) Q = (\eta_1, \cdots, \eta_n)U_1U_2\cdots U_{n-1} $, 其中 $U_i$ 是镜面反射矩阵
+
+    在标准正交基 $\eta_1, \cdots, \eta_n$ 下，镜面反射矩阵 $U_1$ 对应于镜面反射变换 $\sigma_1$, 于是 $(\eta_1, \cdots, \eta_n)U_1U_2\cdots U_{n-1} = \sigma_1(\eta_1, \cdots, \eta_n) U_2\cdots U_{n-1}$. 由于镜面反射变换不改变内积，故而 $\sigma_1(\eta_1,\cdots,\eta_n)$ 仍是一组标准正交基，不妨设 $U_2$ 在 $\sigma_1\{\eta_i\}$ 下对应于 镜面反射变换 $\sigma_2$, 则有 $(\eta_1, \cdots,\eta_n)U_1U_2\cdots U_{n-1} = (\sigma_2\sigma_1)(\eta_1,\cdots,\eta_n)U_3\cdots U_{n-1}$. 归纳地进行下去，假设镜面反射矩阵 $U_{i+1}$ 在 $(\sigma_i\cdots \sigma_1)(\eta_1, \cdots, \eta_n)$ 这一标准正交基 下对应于 镜面反射变换 $\sigma_{i+1}$, 则最终得到 
+    $$\sigma(\eta_1,\cdots,\eta_n) = (\sigma_{n-1}\sigma_{n-2}\cdots\sigma_1)(\eta_1,\cdots,\eta_n)$$
+
+    这就构造出了 $\sigma = \sigma_{n-1}\sigma_{n-2}\cdots \sigma_1$.
+
+    似乎证复杂了，实际上只需要假设 $U_i$ 在 $(\eta_1, \cdots, \eta_n)$ 下对应于镜面反射变换 $\sigma_i$, 即可得到 $\sigma = \sigma_1\sigma_2\cdots \sigma_{n-1}$
+
+    \item [2.] 60页 习题8
+
+    方便起见，这里先证明第2问的结论，以说明 $\tau$ 的存在性，再回到第1问，补充证明其唯一性：
+
+    $\sigma$ 在 基 $V=(v_1,v_2, \cdots, v_n)$ 下对应于矩阵 $A$, 取 $\tau$ 为 在这组基下 $A^\star$ 对应的线性变换，任取 $v = (v_1, \cdots, v_n)\alpha$, $w = (v_1,\cdots, v_n)\beta$, 则 $\sigma v = (v_1,\cdots, v_n)A\alpha$, $\tau w = (v_1,\cdots, v_n)A^\star\beta$. 
+    
+    计算得到 $[\sigma v, w] = \alpha^\star A^\star V^\star V \beta$, $[v, \tau w] = \alpha^\star V^\star VA^\star \beta$.
+    
+    实际上应该需要增加 $(v_1, \cdots, v_n)$ 是标准正交基的条件，以保证 $V^\star V = E$, 从而有 $[\sigma v, w] = [v, \tau w]$.
+
+    下面验证这样的 $\tau$ 的唯一性：假设 $\tau_1, \tau_2$ 都满足 $[\sigma v, w] = [v, \tau_i w], \forall v, w\in V, i=1,2$. 
+    
+    构造线性变换 $\tau^\prime : x \to \tau_1 x - \tau_2 x$, 则有 $\forall  v, w\in V, [v, \tau^\prime w] = 0$. 取 $v=\tau^\prime w$ 即有 对任意的 $w\in V$, $[\tau^\prime w, \tau^\prime w] = 0$, $\tau^\prime w = 0$, 这就验证了 $\tau^\prime = \tau_1 - \tau_2$ 是零线性变换, 故 $\tau_1 = \tau_2$.
+
+    若 $\sigma\sigma^\star = \sigma^\star\sigma$ 则称 $\sigma$ 是正规线性变换，这一定义当然与正规矩阵的概念和谐。因为正规矩阵是指使得 $AA^\star = A^\star A$ 成立的矩阵，而在标准正交基下，线性变换与矩阵是对应的。
+
+    \item [3.] 63页 习题3 
+    \begin{itemize}
+        \item [$\Rightarrow$:] 由教材 62页 命题 3.4.3 直接可得；
+        \item [$\Leftarrow$:]
+        \begin{lemma}
+            如果 $V = A\oplus W_A = B \oplus W_B$, 且有 $B\subseteq W_A$, 那么 $W_A = B\oplus (W_A \cap W_B)$.
+        \end{lemma}
+        \begin{proof}
+            显然有 $W_A\cap W_B \subseteq W_B$ 与 $B$ 的交集为 $\{0\}$, 所以 $B + (W_A\cap W_B) = B\oplus (W_A \cap W_B)$.
+            
+            
+            考虑到 $B\subseteq W_A, (W_A\cap W_B)\subseteq W_A$, 所以 $B\oplus(W_A\cap W_B) \subseteq W_A$. 下验证 $W_A\subseteq B\oplus(W_A\cap W_B)$:
+            
+            对于任意 $v\in W_A\subseteq V = B \oplus W_B$, $v = b + w_b$, 其中 $b\in B, w_b\in W_B$. 假设 $w_b$ 在 $V=A \oplus W_A$ 下表示为 $w_b = a + w_a$, $a\in A, w_a\in W_A$, 那么有 $v = b + a + w_a$. 由于 $b\in B\subseteq W_A, w_a\in W_A$, $W_A$ 是线性空间, 所以 $a = v - b - w_a \in W_A$, 又 $a\in A$, 所以 $a=0$. 从而 $w_b = w_a\in W_A$, 即 $w_b\in (W_A\cap W_B)$. 这就验证了 $W_A$ 中任意的 $v$ 可以表示为 $v = b + w_b$, 其中 $b\in B, w_b\in(W_A\cap W_B)$.
+        \end{proof}
+        假设 $\lambda$ 是 $\sigma$ 在 $V$ 下的某一个特征值，设 $A=\{v\in V| \sigma v = \lambda v\}$. 
+        
+        如果 $\dim A = \dim V$, 那么$\sigma$ 在某组基下对应于对角阵 $\lambda E$. 
+        
+        如果 $0 < \dim A < \dim V$, 显然 $A$ 是一个 $\sigma$-子空间，根据题设，它存在 $\sigma$-子空间直和补 $W_A$, $V = A\oplus W_A$. 由 Lemma 0.2 可知 $W_A$ 也满足 “每个 $\sigma$-子空间 都有一个 $\sigma$-子空间直和补”，因为对于 $W_A$ 的 $\sigma$-子空间 $B$, 在 $V$ 上存在 $\sigma$-子空间直和补 $W_B$, 从而可以构造 $W_A$ 上的 $\sigma$-子空间直和补 $W_A\cap W_B$. 由于 $\dim W_A < \dim V$, 归纳地进行下去，即可证得 $\sigma$ 在 $W_A$ 的某个基下对应于对角阵 $\Lambda_{\dim W_A}$, 从而 证得 $\sigma$ 在 $V$ 的某组基下对应于对角阵 $\left[\begin{array}{cc}\lambda E_{\dim A}&\\&\Lambda_{\dim W_A}\end{array}\right]$
+    \end{itemize}
+
+    \item [4.] 63页 习题4
+    
+    \begin{itemize}
+        \item [(1)] 这里利用 Jordan 标准型的唯一性来说明：假设对于 $V$ 的某个非平凡的 $\sigma$-子空间 $W$，存在 $\sigma$-子空间直和补 $W^\prime$，那么假设 $w_1, \cdots w_r$ 是 $W$ 的一组基，$0<r<n$, $w_{r+1}, \cdots, w_n$ 是 $W^\prime$ 的一组基，则有 $\sigma (w_1, \cdots, w_r, w_{r+1},\cdots, w_n) = (w_1, \cdots, w_r, w_{r+1},\cdots, w_n)\left[\begin{array}{cc}A&\\&B\end{array}\right]$. 其中 $A$ 是 $r$ 阶方阵， $B$ 是 $n-r$ 阶方阵。于是 $J = \lambda E_n + E_{12} + \cdots + E_{n-1,n}$ 相似于 $\left[\begin{array}{cc}A&\\&B\end{array}\right]$ 以及相似于 它的 Jordan 标准型 $\left[\begin{array}{cc}J_A&\\&J_B\end{array}\right]$. 这与 方阵的Jordan标准型 唯一相矛盾，所以对于 $V$ 的任意非平凡 $\sigma$-子空间 不存在 $\sigma$-子空间直和补。
+        \item [(2)] 不妨将这组基显式地设出来 $\{\alpha_i\}$, $\sigma(\alpha_1, \cdots, \alpha_n) = (\alpha_1,\cdots,\alpha_n) J$. 下面归纳地证明：
+        
+        若 $W$ 是 $V$ 的一个维数 不少于 $k$ 的 $\sigma$-子空间，那么 $\alpha_i \in W, \forall i\leq k$.
+
+        \begin{proof}
+            ~\\
+            \begin{itemize}
+                \item [i.] 对于 $k=1$, 由于 $W$ 维数至少为 $1$, 故存在 $W \ni v = \sum_i c_i \alpha_i$, 使得至少有一个 $c_i\ne 0$. 设 $j$ 是使 $c_j\ne 0$ 成立的最大下标。考虑到 $W$ 也是 $\tau = \sigma - \lambda I_V$ 不变的，又有 $\tau \alpha_1 = 0, \tau \alpha_{i+1} = \alpha_i, i\geq 1$, 故 $\tau^{j-1} v = c_j\alpha_1 \in W$, 从而得到 $\alpha_1 \in W$.
+                \item [ii.] 若 $W$ 是 $V$ 的一个维数不少于 $k+1$ 的 $\sigma$-子空间，那么存在 $W\ni v = \sum_i c_i\alpha_i$, 使得至少有 $k+1$ 个 $c_i\ne 0$ (否则$W$的维数不超过$k$). 设 $j$ 是使得 $c_j\ne 0$ 成立的最大下标, 显然有 $j\geq k+1$。同样地，构造 $\tau = \sigma - \lambda I_V$, 显然 $W$ 也是 $\tau$不变的。由于 $\tau^{j-k-1} v = c_j \alpha_{k+1} + \sum_{i > j - k - 1} c_i\alpha_{i - (j - k - 1)} = c_j\alpha_{k+1} + v^\prime\in W$, 其中 $v^\prime \in \mathtt{span}\{\alpha_1,\cdots, \alpha_k\}$. 由归纳假设知，$\mathtt{span}\{\alpha_1,\cdots, \alpha_k\} \subseteq W$ (由 $W$ 维数不少于 $k$ 推知), 故而 $\alpha_{k+1}\in W$.
+            \end{itemize}
+        \end{proof}
+
+        由上述命题可知，$\sigma$-子空间有且仅有 $\{0\}$ 以及 $\mathtt{span}\{\alpha_1,\cdots,\alpha_i\}$ 其中 $1\leq i\leq n$.
+
+        事实上由这一命题也能推出本题 (1) 问中的结论。
+    \end{itemize}
+    
+    \item [5.] 63页 习题6
+    
+    由本次作业第2题(60页习题8)可知，$\sigma$ 是正规变换，当且仅当它在某一组标准正交基 $\alpha_1, \cdots, \alpha_n$ 下对应的矩阵 $A$ 是正规矩阵。而由正规矩阵基本定理可知，正规矩阵 $A$ 可以酉对角化，即存在酉矩阵 $U$, $UAU^\star = \Lambda$. 所以这等价于 $\sigma$ 在某组标准正交基,即 $(\alpha_1, \cdots, \alpha_n)U^\star$ 下, 对应于对角矩阵 $\Lambda = UAU^\star$.
+
+    那么由教材61页引理3.4.2可知，设$\lambda_1, \cdots, \lambda_r$ 是 $\sigma$ 的互异的特征值，则 $V = \bigoplus_{i=1}^r V_i$, 其中 $V_i = \{v\in V| \sigma v = \lambda_i v\}$. 再仿照教材62页 命题3.4.3 的方法, 可将 $W$ 分解为 $W = \bigoplus_i (W\cap V_i)$. 考虑到 对于 $W\cap V_i$, 其在 $V_i$ 中存在正交补 $(W\cap V_i)^\perp$ (对$V_i$中的特征向量做正交化即可构造), 显然 $(W\cap V_i)^\perp$ 也是 $\sigma$ 不变的。于是 可以构造 $W^\perp = \bigoplus_i (W\cap V_i)^\perp$, 且它是 $\sigma$-子空间。
+
+\end{itemize}
+\end{spacing}
+
+\end{document}

@@ -1,0 +1,133 @@
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance,mathtools}
+\usepackage{wrapfig}
+\usepackage{mathrsfs, euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{setspace}
+%\usepackage{subcaption}
+\usepackage{float}
+\usepackage{listings}
+%\usepackage{enumerate}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage[vlined,ruled,commentsnumbered,linesnumbered]{algorithm2e}
+\usepackage[ruled,lined,boxed,linesnumbered]{algorithm2e}
+\usepackage{tikz}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\renewenvironment{solution}[1][Solution]{~\\ \textbf{#1.}}{~\\}
+
+\newcommand{\prob}{\mathtt{Pr}}
+
+\newcommand{\postscript}[2]
+    {\setlength{\epsfxsize}{#2\hsize}
+    \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+\SetKwFor{Function}{function}{:}{end}
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+
+\title{矩阵理论 作业4}
+\author{刘彦铭\ \ 学号:122033910081}
+\date{编辑日期:\ \today}
+
+\begin{document}
+
+\maketitle
+
+2.3节习题2；
+
+2.4节习题5，6
+
+\begin{spacing}{1.5}
+\begin{itemize}
+    \item 2.3 - 习题2
+    
+    \begin{itemize}
+        \item [$\Leftarrow$]
+            存在实正交矩阵$P\in\mathbb{R}^{n\times n}$使得 $P^\top BP = \left[\begin{array}{cc}-1&0\\0&E_{n-1}\end{array}\right]$, 所以 
+            $B = P\left(E_n - 2\cdot\left[\begin{array}{cc}1&0\\0&O_{n-1}\end{array}\right]\right)P^\top$ 展开即可得到：$B = E - 2p_1p_1^\top$, 其中 $p_1$ 是
+            实正交矩阵的第$1$列，是单位向量，这就验证了 $B$ 是镜面反射矩阵。
+        \item [$\Rightarrow$] 由于 $B$ 是镜面反射矩阵，所以存在某个单位长度的 $\delta\in\mathbb{C}^{n\times 1}$ 使得 $B = E - 2\delta\delta^\star$。
+        
+        由于 $B$ 是实方阵，所以 $\delta\delta^\star$ 
+        也必须是实矩阵，即 $\delta_i\delta_j\in\mathbb{R},\forall 1\leq i,j \leq n$，这要求$\delta$中的各分量的辐角彼此相差$\pi$的整数倍，所以$\delta$可以拆分作 $\delta=\mathtt{e}^{i\theta}\cdot \delta^\prime$,
+        其中$\delta^\prime$是实单位向量。
+
+        仿照引理2.2.2的推导可知，存在实正交矩阵 $P$ 使得 $P^\top\delta^\prime = \left[1, 0, 0, \cdots, 0\right]^\top$. (注：引理2.2.2是针对复数域的，但由于这里的$\delta^\prime$是实向量，故可以按照完全相同的方法构造出实的镜面反射矩阵$P$)
+        
+        故 $P^\top B P = P^\top(E-2\delta\delta^\star)P = P^\top \left(E - 2(\mathtt{e}^{i\theta}\delta^\prime)(\mathtt{e}^{-i\theta}{\delta^\prime}^\top)\right)P = E - 2(P^\top\delta^\prime)(P^\top\delta^\prime)^\top = \mathtt{diag}\{-1, E\}$
+
+    \end{itemize}
+
+    \item 2.4 - 习题5
+    
+    \begin{itemize}
+        \item [(1)]由于 $A$ 是正规矩阵,根据正规矩阵基本定理,$A$酉相似于对角阵，即存在酉矩阵$U$, $U^\star A U = \mathtt{diag}\{\lambda_1, \lambda_2, \cdots, \lambda_n\}$, 且根据 Schur 引理的推导过程知，对角线上元素$\lambda_i$为 $A$ 的特征值，在本题中他们两两互异。
+
+            所以 $A = U\Lambda U^\star$, 其中 $\Lambda = \mathtt{diag}\{\lambda_1, \lambda_2, \cdots, \lambda_n\}$. $AB=BA \Rightarrow U\Lambda U^\star B = B U\Lambda U^\star \Rightarrow$ 
+            
+            $\Lambda U^\star B U = U^\star B U \Lambda$. 考虑左右两边的 $i,j$ 位置元素, 可得 $\lambda_i (U^\star B U)_{ij} = \lambda_j (U^\star B U)_{ij}$, 再由$\lambda_i$两两互异可知，$(U^\star B U)$对角线以外的元素均为0，即 $B$ 酉相似于对角阵，所以 $B$ 是正规矩阵。
+        \item[(2)] 由(1)的推导可知, 任意$B\in\mathbb{C}(A), AB=BA$, 都有 $B = U\Lambda_B U^\star$, 且对不同的$B$, 对应的酉矩阵$U$都相同，都由 $A$ 决定。$U = (u_1, u_2, \cdots, u_n)$, 则 $u_1u_1^\star, u_2u_2^\star,\cdots, u_nu_n^\star$ 构成 $\mathbb{C}(A)$
+        的一组基。因为对于任意的 $B$, $B= \sum_i {\Lambda_B}_i u_iu_i^\star$, 且$u_iu_i^\star$之间彼此正交, ${\Lambda_B}_{i}\in\mathbb{F}$。所以 $\mathbb{C}(A)$ 是数域 $\mathbb{F}$ 上的 $n$ 维线性空间。
+        加法、数乘的封闭性显然。乘法的封闭性由 $(u_iu_i^\star)(u_ju_j^\star) = \delta_{ij} u_iu_i^\star$ 保证。
+        
+    \end{itemize}
+    
+    
+
+    \item 2.4 - 习题6
+    
+    先证明一个性质 $tr(AB) = tr(BA)$. $tr(AB) = \sum_{i} (AB)_{ii} = \sum_{i} \sum_{k} A_{ik}B_{ki} = \sum_{k}\sum_{i} B_{ki}A_{ik} = \sum_k (BA)_{kk} = tr(BA)$.
+
+    \begin{itemize}
+        \item [(1)] $A_n$ 是Hermite矩阵 $\Leftrightarrow$ $tr(A^2) = tr(A^\star A)$.
+        \begin{itemize}
+            \item [$\Rightarrow$:] $A^\star = A$, 故 $tr(AA) = tr(A^\star A)$ 显然成立。
+            \item [$\Leftarrow$:] 据Schur引理，存在酉矩阵 $Q$ 使得 $QAQ^\star = U$, 其中 $U$ 是上三角矩阵, $A = Q^\star U Q$.
+            
+            于是有 $tr(AA) = tr(Q^\star U Q Q^\star U Q) = tr(Q^\star U U Q) = tr(UUQQ^\star) = tr(UU)$.
+            
+            类似地，$tr(A^\star A) = tr(Q^\star U^\star QQ^\star U Q) = tr(Q^\star U^\star U Q) = tr(U^\star U Q Q^\star) = tr(U^\star U)$. 
+        
+            注意到 $U$ 是上三角矩阵，$U^\star$ 是下三角矩阵，$tr(UU) = \sum_{k} U_{kk}U_{kk}$. 而 $tr(U^\star U) = \sum_{i,j}\overline{U_{ij}}U_{ij}$
+            
+            由于 $tr(U^\star U)$ 得到的是实数，现考虑 $tr(UU) = \sum_{k} U_{kk}U_{kk}$ 的实部。
+            容易证明 $\mathtt{Re}(U_{kk}U_{kk}) = \mathtt{Re}(U_{kk})^2 - \mathtt{Im}(U_{kk})^2 \leq \mathtt{Re}(U_{kk})^2 + \mathtt{Im}(U_{kk})^2 = \overline{U_{kk}}U_{kk}$.
+            当且仅当 $U_{kk}$ 为实数时取等号。所以 由 $tr(UU) = \sum_{k} U_{kk}U_{kk} = \sum_{i,j}\overline{U_{ij}}U_{ij} = tr(U^\star U)$ 推出 $U_{kk}$ 都是实数，且 $U_{ij}=0, \forall i\ne j$.
+
+            所以 $U$ 是实对角矩阵，$U^\star = U$. 所以 $A^\star = Q^\star U^\star Q = Q^\star U Q = A$, $A$ 是 Hermite矩阵。
+
+        \end{itemize}
+        \item [(2)] $A, B$ 都是 Hermite矩阵, $AB = BA \Leftrightarrow tr((AB)^2) = tr(A^2B^2)$.
+        \begin{itemize}
+            \item [$\Rightarrow$:] $AB = BA \Rightarrow (AB)^\star = B^\star A^\star = BA = AB$, 所以 $AB$ 是 Hermite矩阵. 由 (1) 知，$tr((AB)^2) = tr((AB)^\star AB) = tr(BAAB) = tr(AABB) = tr(A^2B^2)$.
+            \item [$\Leftarrow$:] $tr((AB)^2) = tr(A^2B^2) \Rightarrow tr(ABAB) = tr(AABB) \Rightarrow tr(ABAB) = tr(BAAB) \Rightarrow tr(ABAB) = tr((AB)^\star AB)$. 由 (1) 知 $AB$ 是 Hermite矩阵，
+            所以 $BA = B^\star A^\star = (AB)^\star = AB$. 
+        \end{itemize}
+    \end{itemize}
+
+
+\end{itemize}
+\end{spacing}
+
+
+\end{document}

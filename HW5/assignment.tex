@@ -1,0 +1,149 @@
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance,mathtools}
+\usepackage{wrapfig}
+\usepackage{mathrsfs, euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{setspace}
+%\usepackage{subcaption}
+\usepackage{float}
+\usepackage{listings}
+%\usepackage{enumerate}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage[vlined,ruled,commentsnumbered,linesnumbered]{algorithm2e}
+\usepackage[ruled,lined,boxed,linesnumbered]{algorithm2e}
+\usepackage{tikz}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\renewenvironment{solution}[1][Solution]{~\\ \textbf{#1.}}{~\\}
+
+\newcommand{\prob}{\mathtt{Pr}}
+
+\newcommand{\postscript}[2]
+{\setlength{\epsfxsize}{#2\hsize}
+\centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+\SetKwFor{Function}{function}{:}{end}
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+
+\title{矩阵理论 作业5}
+\author{刘彦铭\ \ ID:122033910081}
+\date{Last Edited:\ \today}
+
+\begin{document}
+
+\maketitle
+
+2.5节习题2、3、5；
+
+2.6节习题1
+
+\begin{spacing}{1.5}
+    \begin{enumerate}
+        \item [2.5 习题2]
+        
+        \begin{itemize}
+            \item [$\Rightarrow$:]
+            
+            $A$ 与 $B$ 酉等价，故而存在酉矩阵 $U_m, V_n$ 使得 $U_m A V_n = B$, $V_n^\star A^\star U_m^\star = B^\star$. 所以 存在酉矩阵 
+            $U_1 = \left(\begin{array}{cc}0&U_m\\V_n^\star&0\end{array}\right)$, 使得 
+            $U_1 \left(\begin{array}{cc}0&A\\A^\star&0\end{array}\right) U_1^\star = \left(\begin{array}{cc}0&B\\B^\star&0\end{array}\right)$.
+            故这两分块矩阵酉相似。
+
+            \item [$\Leftarrow$:]
+            
+            考虑到 $A^\prime := \left(\begin{array}{cc}0&A\\A^\star&0\end{array}\right)$ 是Hermite矩阵，故其显然也是正规矩阵，酉相似于一对角阵，即存在 酉矩阵 $U_A$，
+            $A^\prime = U_A \Lambda_A U_A^\star$. 同样地，对于Hermite阵 $B^\prime = \left(\begin{array}{cc}0&B\\B^\star&0\end{array}\right)$, 存在酉矩阵 $U_B$，
+            $B^\prime = U_A \Lambda_B U_B^\star$. 注意到，有 $\mathtt{det}(xE - A^\prime) = \mathtt{det}(xE - \Lambda_A)$, $\mathtt{det}(xE - B^\prime) = \mathtt{det}(xE - \Lambda_B)$.
+            
+            由于 $A^\prime$ 酉相似于 $B^\prime$, 即存在酉矩阵 $U$， $UA^\prime U^\star = B^\prime$, 即 $UU_A\Lambda_AU_A^\star U^\star = U_B\Lambda_BU_B^\star$, 存在酉矩阵 
+            $V = (U_B^\star UU_A)$ 使得 $V\Lambda_A V^\star = \Lambda_B$, 于是有 $\mathtt{det}(xE - \Lambda_A) = \mathtt{det}(xE - \Lambda_B)$.
+            
+            从而得到 $\mathtt{det}(xE - A^\prime) = \mathtt{det}(xE - B^\prime)$, 利用行变换将 $xE - A^\prime$ 与 $xE-B^\prime$消为下三角分块阵得： 
+
+            $x^{n-m}\mathtt{det}(x^2E_m - A_{m\times n}A^\star_{n\times m}) = x^{n-m}\mathtt{det}(x^2E_m - B_{m\times n}B^\star_{n\times m})$.
+            
+            由此知 $\mathtt{det}(xE - AA^\star) = \mathtt{det}(xE - BB^\star)$，所以 $A$ 和 $B$ 有相同的正奇异值，即存在酉矩阵 $U^A_m, V^A_n, U^B_m, V^B_n$ 以及一个对角阵 $S_{m\times n}$, 使得 
+            $A = U^A_mS_{m\times n}V^A_n$, $B = U^B_mS_{m\times n}V^B_n$, 得到 $A = (U^A_mU^{B\star}_m)B(V^{B\star}_nV^A_n)$, 这就证明了 $A$ 酉等价于 $B$.
+
+        \end{itemize}
+
+        \item [2.5 习题3]
+        
+        \begin{itemize}
+            \item [(1)] 对于任一可逆矩阵 $A_n$, $A_n$ 列满秩，列空间为 $\mathbb{C}^n$，$A_n$亦有行满秩性质，故 $A^\star$ 列空间也为 $\mathbb{C}^n$. 故得可逆矩阵都是 EP-阵.
+        
+                        对于任一正规矩阵 $A_n$, 其酉相似于对角阵，即存在 酉矩阵 $U_n$ 使得 $UA = \mathtt{diag}(\lambda_1, \lambda_2,\cdots, \lambda_r, 0, \cdots, 0)U$, 其中 $r$ 为 $A$ 的列秩。
+                        显然地，$UA^\star = \mathtt{diag}(\bar\lambda_1,\bar\lambda_2, \cdots, \bar\lambda_r, 0, \cdots, 0)U$, 故而 $A^\star$ 的列秩也是 $r$. 
+                        
+                        为证明它们对应的列向量空间相同，
+                        记 $A = (\alpha_1, \cdots, \alpha_n)$, $A^\star = (\beta_1, \cdots, \beta_n)$ 存在可逆矩阵 $U_1$ 和 $U_2$ 使得 $UA = (U\alpha_1,\cdots,U\alpha_n) = \left(\begin{array}{cc}E_r&0\\0&0\end{array}\right)U_1$, 
+                        $UA^\star = (U\beta_1,\cdots, U\beta_n) = \left(\begin{array}{cc}E_r&0\\0&0\end{array}\right)U_2$. 方便起见，记 $E_r = (\epsilon_1, \cdots, \epsilon_r)$. 
+                        对$A$的列向量空间上的任一向量$v$, 有 
+                        $$v = (\alpha_1, \cdots, \alpha_n) \gamma = U^{-1}(U\alpha_1, \cdots, U\alpha_n)\gamma = U^{-1} (U\beta_1, \cdots, U\beta_n)U_2^{-1}U_1\gamma = (\beta_1, \cdots, \beta_n)U_2^{-1}U_1\gamma$$， 其中 $\gamma \in\mathbb{C}^n$.
+                        所以存在 $\gamma^\prime = U_2^{-1}U_1\gamma\in\mathbb{C}^n$, $v = (\beta_1, \cdots, \beta_n) \gamma^\prime$, 所以 $v$ 在 $A^\star$ 的列空间中，这就证明了 $A$ 的列空间是 $A^\star$ 的列空间的子空间。又知二者维数都为 $r$, 所以两列空间相同。(或者用反之亦然说明 $A^\star$ 列空间是 $A$ 列空间的子空间，进而说明相同)。
+                        由此证得，正规矩阵都是 EP-阵.
+
+            \item [(2)] 
+            \begin{enumerate}
+                \item [$\Leftarrow$:] 因为$B$是可逆矩阵，故可构造可逆矩阵 $Q_1 = \left(\begin{array}{cc}B&0\\0&E\end{array}\right)Q^\star$, $Q_2=\left(\begin{array}{cc}B^\star&0\\0&E\end{array}\right)Q^\star$, 
+                
+                有 $Q^\star A = \left(\begin{array}{cc}E_r&0\\0&0\end{array}\right)Q_1$, 
+                                    $Q^\star A^\star = \left(\begin{array}{cc}E_r&0\\0&0\end{array}\right)Q_2$.
+                由此，可完全仿照(1)中对正规矩阵的讨论，证明方阵 $A$ 是EP-阵。
+                \item [$\Rightarrow$:] 对 $r$ 秩方阵$A$ 作 QR 分解， $A = Q_{n\times r}R_{r\times n}$, 其中 $Q$是列酉阵，$r(Q) = r(R) = r$, $Q^\star Q = E_r$.
+                那么 $A^\star = R^\star Q^\star$. 由 $A$ 是 EP-阵知， $A^\star$ 的列向量可由 $Q$ 的列向量线性组合表示，故 $A^\star = QR^\prime$.
+                由此得 $R^\star Q^\star = QR^\prime$, 故 $R^\prime = Q^\star QR^\prime = Q^\star R^\star Q^\star$, $A^\star = QR^\prime = QQ^\star R^\star Q^\star$, 于是 $A = QRQQ^\star$.
+                关于$x\in\mathbb{C}^n$的方程 $Q^\star x = 0$ 其解空间是 $n-r$ 维线性空间，从中取出一组单位正交的基，作为列向量组成矩阵 $Q^\prime = (q_{r+1}, \cdots, q_n)$. 容易验证 $U = (Q; Q^\prime)$ 是 $n$ 阶的酉矩阵。
+                于是有 $$A = (QR)(QQ^\star) = \left(\left(Q; Q^\prime\right)\times\left(\begin{array}{c}R\\0\end{array}\right)\right)\times\left(\left(Q;0\right)\times\left(\begin{array}{c}Q^\star\\Q^{\prime\star}\end{array}\right)\right) = U\left(\begin{array}{cc}RQ&0\\0&0\end{array}\right)U^\star$$
+                且可以验证 $r(RQ) = r(R) = r(Q) = r$, $RQ$ 是 $r$ 阶可逆矩阵.
+            \end{enumerate}
+        \end{itemize}
+
+        \item [2.5 习题5]
+            \begin{enumerate}
+                \item [(1)] 回顾奇异值分解存在性的构造证明可知, $V$ 的后$n-r$列是选取的 $A^\star Ax=0$ 的解空间的标准正交基。由于 $Ax=0\Rightarrow A^\star Ax=0$, 所以 $Ax=0$ 的解空间是 $A^\star Ax=0$ 解空间的子线性空间。
+                又知二者均为 $n-r$ 维，故 $Ax=0$ 与 $A^\star Ax=0$ 二者解空间相同，故而 $V$ 的后 $n-r$ 列也是 $A$ 的解空间的一组标准正交基。 
+                \item [(2)] $AV = U\Lambda$. 其中 $\Lambda = \left(\begin{array}{cc}\Lambda_r&0\\0&0\end{array}\right)$. 故可知 $U$ 的前 $r$ 列 是 $AV$ 的列空间的一组基，且由于是奇异值分解所以它是标准正交的。又由于 $V$ 是酉矩阵，故而 $AV$ 和 $A$ 的列空间相同，这就说明了 $U$ 的前 $r$ 列是 $A$ 的列空间的一个标准正交基。
+                \item [(3)] 回顾奇异值分解存在性的构造证明可知，对于 $U=(\alpha_1,\cdots,\alpha_n)$ 的后 $n-r$ 列中的任意一列，比如 $\alpha_i, i>r$, 有 $AA^\star\alpha_i = \lambda_i\alpha_i = 0$ 因为 $\lambda_i = 0 , \forall i > r$. 仿(1) 可以得到 $AA^\star$ 和 $A^\star$ 的解空间相同，故而 $U$ 的后 $n-r$ 列是 $A^\star$ 解空间的子线性空间。
+                            再由二者维数相同知，$U$ 的后 $n-r$ 列是该解空间的一组基，且由于$A=U\Lambda V^\star$是SVD分解，所以是标准正交的。
+                \item [(4)] $A^\star = V\Lambda^\star U^\star$, 故 $A^\star U = V\Lambda^\star$, 同 (2) 可证。
+            \end{enumerate}
+        
+        \item [2.6 习题1] 求 $A=\left(\begin{array}{ccccc}1&1&1&0&2\\1&0&1&1&3\\0&1&1&1&4\end{array}\right)$ 的MP广义逆。经计算得到：有下三角矩阵 $L = \left(\begin{array}{ccc}1&&\\8/7&1/7&\\10/7&9/70&1/10\end{array}\right)$ 以及行正交的矩阵 
+        $Q = \left(\begin{array}{ccccc}1&1&1&0&2\\-1&-8&-1&7&5\\-13&6&-3&1&5\end{array}\right)$, 使得 $A=L Q$ . 可以验证 $QQ^\star = \mathtt{diag}(7, 140, 240)$. 下面验证 $B = Q^\star (QQ^\star)^{-1} L^{-1}$ 是 $A$ 的广义逆：
+        \begin{enumerate}
+            \item [a.] $ABA = LQ Q^\star (QQ^\star)^{-1} L^{-1} LQ = LQ = A$
+            \item [b.] $BAB = Q^\star (QQ^\star)^{-1} L^{-1} LQ Q^\star (QQ^\star)^{-1} L^{-1} = Q^\star (QQ^\star)^{-1} L^{-1} = B$
+            \item [c.] $AB = LQ Q^\star (QQ^\star)^{-1} L^{-1} = E$ 是 Hermite 矩阵
+            \item [d.] $BA = Q^\star (QQ^\star)^{-1} L^{-1} LQ = Q^\star (QQ^\star)^{-1} Q$ 是 Hermite 矩阵，因为 $QQ^\star$ 是实对角阵
+        \end{enumerate}
+        带入具体数值即可求得 $A$ 的MP广义逆矩阵 
+        $$B = Q^\star (QQ^\star)^{-1} L^{-1} = \left(\begin{array}{ccc}1&-1&-13\\1&-8&6\\1&-1&-3\\0&7&1\\2&5&5\end{array}\right)\times\left(
+            \begin{array}{ccc}1/7&&\\&1/140&\\&&1/240\\\end{array}
+        \right)\times\left(\begin{array}{ccc}1&&\\-8&7&\\-4&-9&10\end{array}\right)$$
+        进一步化简得 $B = \dfrac{1}{48}\times\left(\begin{array}{ccc}20&21&-26\\24&-30&12\\12&3&-6\\-20&15&2\\-4&3&10\end{array}\right)$
+    \end{enumerate}
+    
+\end{spacing}
+
+\end{document}

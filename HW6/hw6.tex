@@ -1,0 +1,138 @@
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance,mathtools}
+\usepackage{wrapfig}
+\usepackage{mathrsfs, euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{setspace}
+%\usepackage{subcaption}
+\usepackage{float}
+\usepackage{listings}
+%\usepackage{enumerate}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage[vlined,ruled,commentsnumbered,linesnumbered]{algorithm2e}
+\usepackage[ruled,lined,boxed,linesnumbered]{algorithm2e}
+\usepackage{tikz}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\renewenvironment{solution}[1][Solution]{~\\ \textbf{#1.}}{~\\}
+
+\newcommand{\prob}{\mathtt{Pr}}
+
+\newcommand{\postscript}[2]
+{\setlength{\epsfxsize}{#2\hsize}
+\centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+\SetKwFor{Function}{function}{:}{end}
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+
+\title{矩阵理论 作业6}
+\author{刘彦铭 \ \ ID: 122033910081}
+\date{Last Edited:\ \today}
+
+\begin{document}
+
+\maketitle
+
+2.7节 习题2、3、12.
+
+\begin{spacing}{1.5}
+
+\begin{itemize}
+    \item [习题2]
+    
+    $A = \left[\begin{array}{ccc}1&1&0\\0&1&5\end{array}\right]$, $AA^\top = \left[\begin{array}{cc}2&1\\1&26\end{array}\right]$，容易验证这是一个正定的 Hermite 矩阵，所以它的 Cholesky 分解存在. 证明了存在性后，Cholesky 分解的具体构造较为容易，这里直接给出结果：
+    
+    $L = \left[\begin{array}{cc}\sqrt{2} & 0 \\ \sqrt{1/2} & \sqrt{51/2}\end{array}\right]$, $AA^\top = LL^\top$.
+
+    \item [习题3] 
+    
+    \begin{itemize}
+        \item [(1)] 首先，容易验证 $AA^\star$ 是一个半正定的 Hermite 矩阵, 那么存在酉矩阵$U_m\in\mathbb{C}^{n\times n}$，使得
+        
+        $AA^\star = U_m \mathtt{diag}(\lambda_1, \dots, \lambda_r, 0, \dots, 0) U_m^\star$. 其中 $r = r(A) = r(A^\star) = r(AA^\star)$. 
+        
+        对 $A$ 进行奇异值分解，有 $A = U_m\left[\begin{array}{cc}\Lambda_r&0\\0&0\end{array}\right]_{m\times n} V_n$，其中 $V_n$ 是另一个 $n$ 阶酉矩阵, $\Lambda_r = \mathtt{diag}(\lambda_1^{1/2},\dots, \lambda_r^{1/2})$. 方便起见，记 $\Lambda = \mathtt{diag}(\lambda_1, \dots, \lambda_r, 0,\dots 0)$. 对SVD分解中的$m\times n$准对角矩阵进行分块可得: 
+        
+        $$A = U_m \left[ \Lambda^{1/2} ; O_{m\times (n - m)} \right] V_n = U_m \Lambda^{1/2}\left[E_m; O\right]V_n = U_m \Lambda^{1/2} U_m^\star U_m [E_m; O] V_n = PU_{m\times n} $$
+
+        其中 $P = U_m \Lambda^{1/2} U_m^\star = (AA^\star)^{1/2}$, $U_{m\times n} = U_m [E_m; O] V_n = [V_m; O] V_n$, 可以验证 $U U^\star = [V_m; O] V_n V_n^\star [V_m; O]^\star = V_mV_m^\star = E_m$. 
+
+        \item [(2)] $r(A) = m$ 时，$AA^\star$ 是满秩方阵， $P = (AA^\star)^{1/2}$ 也是满秩方阵，故而 $U = P^{-1}A$ 唯一确定。
+
+    \end{itemize}
+
+    \item [习题12] 证明关于方阵 $A\in\mathbb{M}_n$ 的下列三个命题的等价性：
+    \begin{itemize}
+        \item [(1)] 存在正整数 $k \geq 1$, 使得 $A^k = 0$ ;
+        \item [(2)] 对于任意正整数 $m\geq 1$, $tr(A^m) = 0$ ;
+        \item [(3)] 对于任意正整数 $m$, $1\leq m \leq n$, $tr(A^m) = 0$ .
+    \end{itemize}
+    \begin{proof}
+        为方便讨论矩阵的迹, 根据 Schur 引理，对 $A$ 做分解: 存在酉矩阵 $U\in\mathbb{M}_n$, 和 上三角矩阵 $R\in\mathbb{M}_n$ 使得 $A = URU^\star$. 从而有 $A^k = UR^kU^\star, \forall k\in\mathbb{N}^*$. 通过简单的数学归纳可以证明 $R^k$ 是上三角矩阵，且 $(R^k)_{ii} = (R_{ii})^k$. 下面按照 (1) $\Rightarrow $ (2) $\Rightarrow $ (3) $\Rightarrow$ (1) 的顺序来证明等价性：
+        \begin{itemize}
+            \item [(1) $\Rightarrow$ (2)] $A^k = UR^kU^\star = 0$, 其中酉矩阵 $U$ 可逆, 所以 $R^k = 0$. 于是对于任意的 $1\leq i\leq n, i\in\mathbb{N}$, $(R^k)_{ii} = (R_{ii})^k = 0$, 所以 $R_{ii} = 0$ 即 $R$ 的对角线元素均为 $0$. 所以 对正整数 $m\geq 1$, $tr(R^m) = \sum_i R_{ii}^m = 0$, $tr(A^m) = tr(UR^mU^\star) = tr(R^mU^\star U) = tr(R^m) = 0$.
+            \item [(2) $\Rightarrow (3)$] 显然
+            \item [(3) $\Rightarrow (1)$] 对于任意的 $1\leq m\leq n$, $tr(A^m) = tr(R^m) = \sum_{i} R_{ii}^m = 0$. 假设 $R_{ii}, 1\leq i\leq n$ 不全为 $0$, 则可取出其中不为 $0$ 的项，去重后得到 $r_1, r_2, \cdots, r_t$, $1\leq t \leq n$. 从而有方程组
+            $$\left[\begin{array}{cccc}
+                r_1 & r_2 & \cdots & r_t\\
+                r_1^2 & r_2^2 & \cdots & r_t^2\\
+                \vdots & \vdots & \ddots & \vdots\\
+                r_1^{t} & r_2^{t} & \cdots & r_t^{t} 
+            \end{array}\right]
+            \left[\begin{array}{c}
+                n_1 \\ n_2 \\ \vdots \\ n_t
+            \end{array}\right] = 
+            \left[\begin{array}{cccc}
+                1 & 1 & \cdots & 1\\
+                r_1^1 & r_2^1 & \cdots & r_t^1\\
+                \vdots & \vdots & \ddots & \vdots\\
+                r_1^{t-1} & r_2^{t-1} & \cdots & r_t^{t-1} 
+            \end{array}\right]
+            \left[\begin{array}{cccc}
+                r_1 & & & \\
+                & r_2 & & \\
+                & & \ddots & \\
+                & & & r_t
+            \end{array}\right]
+            \left[\begin{array}{c}
+                n_1 \\ n_2 \\ \vdots \\ n_t
+            \end{array}\right] = 
+            \left[\begin{array}{c}
+                0 \\ 0 \\ \vdots \\ 0
+            \end{array}\right]$$
+            其中 $n_i$ 表示 $r_i$ 去重前的出现次数，应有 $r_i\ne r_j, \forall i\ne j$ 以及 $n_i > 0, r_i \ne 0, \forall i$.
+            故而此时 方程中的 Vandermonde 矩阵和对角矩阵均可逆，从而$[n_1, n_2, \cdots, n_t]^\top$应为 $0$ 向量，矛盾。所以 $R_{ii}$ 不全为 $0$ 的假设不成立，从而得到 $R$ 是对角线全为 $0$ 的上三角矩阵。即 $R_{ij} = 0, \forall i < j + 1$. 
+            
+            下归纳证明 $(R^{k})_{ij} = 0, \forall i < j + k$ : (1) 对于 $k=1$ 成立；(2) $(R^k)_{ij} = 0, \forall i < j + k$ $\Rightarrow$ $(R^{k+1})_{ij} = (R^k R)_{ij} = \sum_t (R^k)_{it} R_{tj}$ . 当 $i < j + k + 1$ 时, $i \geq t + k$ 与 $t \geq j + 1$ 不能同时成立，故 $(R^k)_{it}$ 与 $R_{tj}$ 中至少有一个为 $0$, 从而推出 $(R^{k+1})_{ij} = 0, \forall i < j + (k + 1)$.
+
+            对于任意 $1\leq i,j\leq n$, 有 $i < j + n$, 于是 $(R^n)_{ij} = 0$, 所以 $R^n = 0$, $A^n = UR^n U^\star = 0$.
+
+            注：这还说明了，如果存在正整数 $k$ 使得 $A^k = 0$, 那么存在 $k \leq n$ 使得 $A^k = 0$.
+        \end{itemize}
+    \end{proof}
+
+\end{itemize}
+    
+\end{spacing}
+
+\end{document}

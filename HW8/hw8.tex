@@ -1,0 +1,128 @@
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance,mathtools}
+\usepackage{wrapfig}
+\usepackage{mathrsfs, euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{setspace}
+%\usepackage{subcaption}
+\usepackage{float}
+\usepackage{listings}
+%\usepackage{enumerate}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage[vlined,ruled,commentsnumbered,linesnumbered]{algorithm2e}
+\usepackage[ruled,lined,boxed,linesnumbered]{algorithm2e}
+\usepackage{tikz}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\renewenvironment{solution}[1][Solution]{~\\ \textbf{#1.}}{~\\}
+
+\newcommand{\prob}{\mathtt{Pr}}
+
+\newcommand{\postscript}[2]
+{\setlength{\epsfxsize}{#2\hsize}
+\centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+\SetKwFor{Function}{function}{:}{end}
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+
+\title{矩阵理论\ 作业8}
+\author{刘彦铭\ \ ID: 122033910081}
+\date{Last Edited:\ \today}
+
+\begin{document}
+
+\maketitle
+
+书面作业：59页: 2、5、6 
+
+(见课程群)例4.13：假设f, g是数域F上n维空间V的线性变换，且fg=0, g²=g. 求证：
+
+（1）V=ker(f) + ker(g); 
+
+（2）V=ker(f) ⊕ ker(g) 当且仅当r(f)+r(g)=n.  
+
+\begin{itemize}
+    \item [1.] 习题2
+    
+    \begin{itemize}
+        \item [$\Rightarrow$:] 不妨设 $\sigma: V = W \oplus W^\perp \to W$, 其中 $(w_1, \cdots, w_r)$ 是 $W$ 子线性空间的一组标准正交基, $(w_{r+1}, \cdots, w_{n})$ 是 $W^\perp$ 上的一组标准正交基，显然 $(w_1, \cdots, w_{r}, w_{r+1}, \cdots w_n)$ 构成 $V = W\oplus W^\perp$ 的一组标准正交基。对于 $V$ 上的任意一组标准正交基 $\alpha_1, \cdots, \alpha_n$, 存在可逆矩阵 $Q$ 使得 $(\alpha_1, \cdots, \alpha_n) = (w_1, \cdots, w_n) Q$, 由于两组都是标准正交基，故而 $Q$ 是酉矩阵。考虑 设 $\sigma$ 在标准正交基 $\{\alpha_i\}$ 下对应矩阵 $A$, 则有
+        
+        $\begin{array}{ll}(\alpha_1, \cdots, \alpha_n) A=\sigma (\alpha_1, \cdots, \alpha_n) &= \sigma(w_1, \cdots, w_r, w_{r+1}, \cdots, w_n) Q \\&= (w_1, \cdots, w_r, w_{r+1}, \cdots, w_n) \left[\begin{array}{cc}E_r&0\\0&0\end{array}\right]Q\\&=(\alpha_1, \cdots, \alpha_n)Q^\star \left[\begin{array}{cc}E_r&0\\0&0\end{array}\right]Q\end{array}$
+
+        所以 $A = Q^\star \left[\begin{array}{cc}E_r&0\\0&0\end{array}\right]Q$ 是 Hermite 矩阵。又 $A^2 = Q^\star \left[\begin{array}{cc}E_r&0\\0&0\end{array}\right]QQ^\star \left[\begin{array}{cc}E_r&0\\0&0\end{array}\right]Q = Q^\star \left[\begin{array}{cc}E_r&0\\0&0\end{array}\right]Q = A$, 所以$A$是幂等的。
+        \item [$\Leftarrow$:] 不妨设 $\sigma$ 在某组标准正交基 $\alpha_1, \cdots, \alpha_n$ 下对应矩阵 $A$, $A$ 是幂等的Hermite矩阵。对于 Hermite 矩阵 $A$, 存在 酉矩阵 $U = (u_1, \cdots, u_n)$ 以及实对角矩阵 $\Lambda$, 使得 $A = U\Lambda U^\star$. 由于是幂等的,$A^2=U\Lambda^2 U^\star = A =U\Lambda U^\star$, 即 $\Lambda^2 = \Lambda$. 所以 $\Lambda$ 对角线元素为 $1$ 或 $0$. 不妨设 $\Lambda = \left[\begin{array}{cc}E_r&0\\0&0\end{array}\right]$, 则 $A = \sum_{i=1}^r u_i u_i^\star$. 容易验证 $\forall i \leq r, Au_i = u_i$, $\forall i > r, Au_i = 0$.
+        
+        构造 $W = \{(\alpha_1, \cdots, \alpha_n) x | x = \sum_{i=1}^r c_i u_i, c_i\in\mathbb{F}\}$, 从而 $W^\perp = \{(\alpha_1, \cdots, \alpha_n) x | x = \sum_{i=r+1}^n c_i u_i, c_i\in\mathbb{F}\}$, 容易验证 $V = W \oplus W^\perp$, 且 $\sigma$ 是从 $V$ 到 $W$ 的一个正交投影变换, 即 $\forall v\in W, \sigma v = v$, $\forall v\in W^\perp, \sigma v = 0$.
+    \end{itemize}
+
+    \item [2.] 习题5
+    
+    \begin{itemize}
+        \item [(1)] $[A, B]:= tr(A^\star B) = \sum_{i} (A^\star B)_{ii} = \sum_{i}\sum_{k} (A^\star)_{ik}B_{ik} = \sum_i\sum_k \overline{A_{ki}}B_{ki}$. 容易验证: 
+        \begin{itemize}
+            \item [*] 对称性：$[B, A] = \sum_{i}\sum_{k} \overline{B_{ki}}A_{ki} = \sum_i\sum_k \overline{\overline{A_{ki}}B_{ki}} = \overline {[A, B]}$.
+            \item [*] 线性性：$[A, \alpha C+ \beta D] = \sum_i\sum_k \overline{A_{ki}}(\alpha C_{ki} + \beta D_{ki}) = \alpha \sum_i\sum_k \overline{A_{ki}}C_{ki} + \beta\sum_i\sum_k \overline{A_{ki}}D_{ki} = \alpha [A, C] + \beta [A, D]$.
+            \item [*] 正定性：$[A, A] = \sum_i\sum_k \overline{A_{ki}}A_{ki} = \sum_i\sum_k |A_{ki}|_2^2 \geq 0$, 当且仅当 $A = 0$ 时取等号。
+        \end{itemize}
+        \item [(2)] $E_{11} = \left[\begin{array}{cccc}1&0&0&0\\0&0&0&0\\0&0&0&0\\0&0&0&0\end{array}\right]$, $ee^\top = \left[\begin{array}{cccc}1&1&1&1\\1&1&1&1\\1&1&1&1\\1&1&1&1\end{array}\right]$. 记夹角为 $\theta$, 有 $\cos \theta = [E_{11}, ee^\top] / \sqrt{[E_{11}, E_{11}][ee^\top, ee^\top]} = 1 / \sqrt{1\times 16} = 1/4$, 即 $\theta = \arccos (1/4)$.
+        
+        该内积空间的一个标准正交基 $\{E_{ij} | i, j\in\{1,2,3,4\}\}$.
+    \end{itemize}
+
+    \item[3.] 习题6
+    
+    \begin{itemize}
+        \item [(1)] 容易验证 $E_{11}, E_{12} + E_{21}, E_{22}$ 是 $W$ 的一组基。所以 $B \in W^\perp$, 当且仅当 $[E_{11}, B] = 0, [E_{12} + E_{21}, B] = 0, [E_{22}, B] = 0$. 设 $B = b_{11}E_{11} + b_{12}E_{12} + b_{21}E_{21} + b_{22}E_{22}$, 则有 
+        
+        $\left[\begin{array}{cccc}1&0&0&0\\0&1&1&0\\0&0&0&1\end{array}\right]\left[\begin{array}{c}b_{11}\\b_{12}\\b_{21}\\b_{22}\end{array}\right] = \left[\begin{array}{c}0\\0\\0\\0\end{array}\right]$, 所以 $[b_{11}, b_{12}, b_{21}, b_{22}]^\top = [0, t, -t, 0]^\top, t\in\mathbb{R}$.
+
+        所以正交补子空间 $W^\perp = \{t(E_{12} - E_{21}) | t\in\mathbb{R}\}$.
+
+        \item [(2)] 由于 $\left[\begin{array}{cc}1&1\\0&0\end{array}\right] = A + B = \left[\begin{array}{cc}1&0.5\\0.5&0\end{array}\right] + \left[\begin{array}{cc}0&0.5\\-0.5&0\end{array}\right]$, 其中 $A\in W, B\in W^\perp$, 所以在$W$上的正交投影为 $A$, 即 $\left[\begin{array}{cc}1&0.5\\0.5&0\end{array}\right]$.
+        
+    \end{itemize}
+
+    \item [4.] 补充 例4.13
+    
+    对于 $\forall \beta\in \mathtt{im}(g)$, 存在 $\gamma\in V$, $g\gamma = v$. 所以 $f\beta = f(g\gamma) = (fg) \gamma = 0$, 即 $\beta \in \mathtt{ker}(f)$,
+    故 $\mathtt{im}(g)\subseteq \mathtt{ker}(f)$.
+
+    根据课上讲到的结论 (或者考查 $g$ 在某组基下对应的矩阵 $A$ 并运用作业7中证明的 55页 习题4 的结论) 有:
+    $r(g) + r(I_V - g) = n$. 容易验证 $\mathtt{im}(I_V - g) \subseteq \mathtt{ker}(g)$, 因为对任意 $(I_V - g)\gamma, \gamma\in V$ 有 $g(I_V-g)\gamma = 0$. 而 $\dim\mathtt{ker}(g) = n-r(g) = r(I_V-g)=\dim\mathtt{im}(I_V-g)$, 所以有 $\mathtt{ker}(g) = \mathtt{im}(I_V - g)$. 
+    
+    考虑任意 $x\in \mathtt{im}(g) \cap\mathtt{im}(I_V - g) = \mathtt{im}(g) \cap\mathtt{ker}(g)$, 有 $x = g\gamma$, 且 $0 = gx = g^2\gamma = g\gamma = x$. 所以 $\mathtt{im}(g)\cap\mathtt{im}(I_V - g) = \{0\}$. 所以有 $V = \mathtt{im}(g) \oplus \mathtt{im}(I_V-g)$.
+    \begin{itemize}
+        \item [(1)] 对于任意 $v\in V - \mathtt{ker}(f)$, 由于 $v\notin \mathtt{ker}(f)$, $\mathtt{im}(g)\subseteq \mathtt{ker}(f)$, 所以 $v\notin \mathtt{im}(g)$. 又 $V = \mathtt{im}(g) \oplus \mathtt{im}(I_V - g)$, 所以 $v\in \mathtt{im}(I_V - g) = \mathtt{ker}(g)$. 这就验证了 $V = \mathtt{ker}(f) + \mathtt{ker}(g)$.
+        
+        \item [(2)] 
+        \begin{itemize}
+            \item [$\Rightarrow$:] 若 $V = \mathtt{ker}(f) \oplus \mathtt{ker}(g)$, 则 $n = \dim\mathtt{ker}(f) + \dim \mathtt{ker}(g) = n-r(f) + n - r(g)$, 故 $r(f) + r(g) = n$.
+            \item [$\Leftarrow$:] 若 $r(f) + r(g) = n$, 则 $\dim\mathtt{ker}(f) = n - r(f) = r(g) = \dim\mathtt{im}(g)$. 又 $\mathtt{im}(g)\subseteq \mathtt{ker}(f)$, 故此时 $\mathtt{ker}(f) = \mathtt{im}(g)$. 又因为 $\mathtt{ker}(g) = \mathtt{im}(I_V - g)$, 所以 $V = \mathtt{im}(g) \oplus \mathtt{im}(I_V - g) = \mathtt{ker}(f) \oplus \mathtt{ker}(g)$.
+        \end{itemize}
+        
+    \end{itemize}
+   
+
+\end{itemize}
+
+\end{document}
