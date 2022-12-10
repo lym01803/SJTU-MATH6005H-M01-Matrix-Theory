@@ -1,0 +1,137 @@
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance,mathtools}
+\usepackage{wrapfig}
+\usepackage{mathrsfs, euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{setspace}
+%\usepackage{subcaption}
+\usepackage{float}
+\usepackage{listings}
+%\usepackage{enumerate}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage[vlined,ruled,commentsnumbered,linesnumbered]{algorithm2e}
+\usepackage[ruled,lined,boxed,linesnumbered]{algorithm2e}
+\usepackage{tikz}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\renewenvironment{solution}[1][Solution]{~\\ \textbf{#1.}}{~\\}
+
+\newcommand{\prob}{\mathtt{Pr}}
+
+\newcommand{\postscript}[2]
+{\setlength{\epsfxsize}{#2\hsize}
+\centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+\SetKwFor{Function}{function}{:}{end}
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+
+\title{矩阵理论\ 作业11}
+\author{刘彦铭\ \ ID: 122033910081}
+\date{Last Edited:\ \today}
+
+\begin{document}
+
+\maketitle
+
+P94 1、2、3；
+
+P101， 1，2，3，4
+
+\begin{spacing}{1.5}
+    
+\begin{itemize}
+    \item [1.] 94页 习题1
+    
+    为避免符号混淆，将新定义的范数记为 $||-||_m$, $||\alpha||_m:=||A\alpha||$, $A$列满秩.
+    \begin{itemize}
+        \item [正定性:] 由于 $||-||$是向量范数，故而 $||\alpha||_m = ||A\alpha|| \geq 0$. $A$ 可作分解 $A = QR$, 其中 $Q\in\mathbb{F}^{m\times n}$ 是列酉阵 $Q^\star Q=E_n$, $R$ 是满秩上三角矩阵。故而 $||\alpha||_m=0\Rightarrow ||A\alpha||=0 \Rightarrow A\alpha=QR\alpha=0 \Rightarrow \alpha = R^{-1}Q^\star QR\alpha = 0$.
+        \item [齐次性:] $||k\alpha||_m = ||A(k\alpha)|| = |k|\cdot||A\alpha|| = |k|\cdot||\alpha||_m$.
+        \item [三角不等式:] $||\alpha+\beta||_m = ||A(\alpha+\beta)|| \leq ||A\alpha|| + ||A\beta|| = ||\alpha||_m + ||\beta||_m$.
+    \end{itemize}
+
+    \item [2.] 94页 习题2
+    
+    $||\alpha||_p =\left(\sum_{i}^{n} ｜\alpha_i｜^p\right)^{1/p}$. 设 $m = \max_{i} |\alpha_i| = ||\alpha||_\infty$, 则 $1^{1/p}\leq\dfrac{||\alpha||_p}{||\alpha||_\infty} = \left(\sum_{i}^{n} \left(\dfrac{｜\alpha_i｜}{m}\right)^p\right)^{1/p}\leq n^{1/p}$.
+
+    考虑到 $\lim_{p\to\infty} 1^{1/p} = 1, \lim_{p\to\infty} n^{1/p} = 1$, 所以 $\lim_{p\to\infty} \dfrac{||\alpha||_p}{||\alpha||_\infty} = 1$, 所以 $\lim_{p\to\infty} ||\alpha||_p = ||\alpha||_{\infty}$.
+
+    \item [3.] 94页 习题3
+    
+    \begin{itemize}
+        \item [(1)] 首先验证 $||\alpha||_A = \sqrt{\alpha^\star A\alpha}$ 是一个向量范数，其中 $A$ 是正定Hermite矩阵
+        \begin{itemize}
+            \item [正定性:] 由 $A$ 是Hermite矩阵可知 $||\alpha||_A\geq 0$ 且 $||\alpha||_A = 0 \rightarrow \alpha = 0$.
+            \item [齐次性:] $||k\alpha||_A = \sqrt{k^2\alpha^\star A\alpha} = |k|\cdot\sqrt{\alpha^\star A\alpha} = |k|\cdot||\alpha||_A$.
+            \item [三角不等式:] 对正定的Hermite矩阵 $A$ 作 Cholesky 分解，$A = LL^\star$. 由 Cauchy-Schwarz 不等式, $\forall x, y$,
+            
+            $[L^\star x, L^\star y] \leq \sqrt{[L^\star x, L^\star x]}\sqrt{[L^\star y, L^\star y]}$, 展开即得 $x^\star Ay = x^\star LL^\star y \leq \sqrt{x^\star LL^\star x y^\star LL^\star y}=\sqrt{x^\star Axy^\star Ay}$. 所以 $(||x||_A + ||y||_A)^2 - ||x+y||_A^2 = 2\left(\sqrt{x^\star Ax}\sqrt{y^\star Ay} - x^\star Ay\right) \geq 0$, 即 $||x||_A + ||y||_A \geq ||x + y||_A$.
+        \end{itemize}
+        \item [(2)] 为说明“当$A$遍历全部$n$阶Hermite正定矩阵时，$||-||_A$遍历全部由$V$上内积确定的范数”，只需要说明，对于任意一个 $V$ 上内积 $[-,-]$，存在对应的Hermite正定矩阵$A$使得 $\forall \beta\in V, [\beta, \beta] = ||\beta||_A^2$.
+        
+        考虑 $V=\mathbb{C}^{n\times 1}$的一组基 $e_1, e_2, \cdots, e_n$, 其中 $e_i$ 表示第 $i$ 个分量为 $1$ 其余分量全为 $0$ 的向量。对于任意的 $\beta \in V$, 有 $\beta = (e_1, e_2, \cdots, e_n)\beta$. 对于内积 $[-, -]$ 有 $[\beta, \beta] = [\sum_{i}\beta_ie_i, \sum_{i}\beta_ie_i]=\sum_{i}\sum_{j}\beta_i^\star [e_i, e_j] \beta_j = \beta^\star A\beta$, 其中 $A = \{[e_i, e_j]\}_{ij}$，即 $A$ 是由基$\{e_i\}$之间的内积取值组成的矩阵。由内积的正定性可知 $A$ 是正定矩阵，由内积的对称性可知 $A$ 是 Hermite 矩阵。
+    \end{itemize}
+
+    \item [4.] 101页 习题1 
+    
+    显然，由于 $||A||_{M_1}$ 相当于矩阵拉平后的向量的 $1-$范数，所以 $||-||_{M_1}$  满足向量范数的要求. 
+    
+    且有 $||AB||_{M_1} = \sum_{i,j} |(AB)_{ij}| = \sum_i\sum_j\sum_k |A_{ij}||B_{jk}| \leq \sum_{i}\sum_{j} |A_{ij}|||B||_{M_1} = ||A||_{M_1} ||B||_{M_1}$.
+
+    \item [5.] 101页 习题2 
+    
+    $0 \leq ||A^k|| \leq ||A||^k$. 又知 $||A|| < 1$, 所以 $\lim_{k\to\infty} ||A||^k = 0$, 所以 $\lim_{k\to\infty} ||A^k|| = 0$, 故 $\lim_{k\to\infty} A^k = 0$.
+
+    \item [6.] 101页 习题3
+    \begin{itemize}
+        \item [(1)]
+        $||UA||_F = \sqrt{\mathtt{tr}\left((UA)^\star(UA)\right)}=\sqrt{\mathtt{tr}(A^\star U^\star UA)} = \sqrt{\mathtt{tr}(A^\star A)} = ||A||_F$; 
+    
+        $||AU||_F = \sqrt{\mathtt{tr}\left((AU)^\star (AU)\right)}=\sqrt{\mathtt{tr}(U^\star A^\star AU)} = \sqrt{\mathtt{tr}(UU^\star A^\star A)} = \sqrt{\mathtt{tr}(A^\star A)} = ||A||_F$.
+        \item [(2)]
+        正规矩阵 $N$ 可酉相似对角化，$N = U^\star\mathtt{diag}\{\lambda_1, \cdots, \lambda_n\}U$. 从而有 $||N||_F = ||U^\star\mathtt{diag}\{\lambda_1, \cdots, \lambda_n\}U||_F = ||\mathtt{diag}\{\lambda_1, \cdots, \lambda_n\}||_F = \sqrt{\sum_i \bar{\lambda}_i\lambda_i} = \sqrt{\sum_i |\lambda_i|^2}$.
+
+    \end{itemize}
+    
+
+    \item [7.] 101页 习题4
+    \begin{itemize}
+        \item [(1)]
+        对于任一矩阵 $A$, $||A||_2 = \sqrt{\rho(A^\star A)}$. 其中 $\rho(-)$ 表示谱半径。 所以 
+    
+        $||UA||_2=\sqrt{\rho(A^\star U^\star U A)} = \sqrt{\rho(A^\star A)} = ||A||_2$
+    
+        $||AU||_2 = \sqrt{\rho(U^\star A^\star A U)} = \sqrt{\rho(A^\star A)} = ||A||_2$, 因为 $\det(xE - U^\star A^\star AU) = \det(xE - A^\star A)$.
+    
+        所以 $||-||_2$ 是酉不变的。
+        \item [(2)]
+        
+        $N = U^\star\mathtt{diag}\{\lambda_1,\cdots,\lambda_n\}U$, $||N||_2=||\mathtt{diag}\{\lambda_1,\cdots,\lambda_n\}||_2=\sqrt{\max_{i} |\lambda_i|^2} = \max_{i} |\lambda_i|$.
+    \end{itemize}
+    
+
+
+\end{itemize}
+
+\end{spacing}
+
+\end{document}
