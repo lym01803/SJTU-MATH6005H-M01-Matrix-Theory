@@ -1,0 +1,96 @@
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance,mathtools}
+\usepackage{wrapfig}
+\usepackage{mathrsfs, euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{setspace}
+%\usepackage{subcaption}
+\usepackage{float}
+\usepackage{listings}
+%\usepackage{enumerate}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage[vlined,ruled,commentsnumbered,linesnumbered]{algorithm2e}
+\usepackage[ruled,lined,boxed,linesnumbered]{algorithm2e}
+\usepackage{tikz}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\renewenvironment{solution}[1][Solution]{~\\ \textbf{#1.}}{~\\}
+
+\newcommand{\prob}{\mathtt{Pr}}
+
+\newcommand{\postscript}[2]
+{\setlength{\epsfxsize}{#2\hsize}
+\centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+\SetKwFor{Function}{function}{:}{end}
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+
+\title{矩阵理论\ 作业12}
+\author{刘彦铭\ \ ID: 122033910081}
+\date{Last Edited:\ \today}
+
+\begin{document}
+
+\maketitle
+
+\begin{spacing}{1.5}
+
+101页: 6、7、8. 其余选做
+\begin{itemize}
+    \item [1.] 习题6
+    
+    \begin{itemize}
+        \item [(1)] $||A||_{M_1} := \sum_{1\leq i, j\leq n} |a_{ij}|$. 由例4.2.8(1)可知 $||A||_1 = \max_{1\leq j\leq n} \sum_{i=1}^{n} |a_{ij}|$, 
+        
+        从而有 $||A||_1 \leq \sum_{1\leq j\leq n}\sum_{1\leq i\leq n} |a_{ij}| = ||A||_{M_1}$.
+        
+        所以对于任意的$A\in M_{n}(\mathbb{F}), v\in\mathbb{F}^n$, $||Av||_1 \leq ||A||_1||v||_1 \leq ||A||_{M_1}||v||_1$, 即$||-||_{M_1}$ 与 $||-||_1$ 相容。
+
+        \item [(2)] 由例4.2.8(2)知, $||A||_2 = \sqrt{\rho(A^\star A)} = \sqrt{\lambda_{\mathtt{max}}(A^\star A)}$. 而对 Frobenius 范数 $||A||_F := \sqrt{\sum_{i,j} \bar a_{ij}a_{ij}}=\sqrt{\mathtt{tr}(A^\star A)} = \sqrt{\sum_i \lambda_i(A^\star A)} \geq \sqrt{\lambda_{\mathtt{max}}(A^\star A)} = ||A||_2$.
+        
+        所以 $||Av||_2 \leq ||A||_2||v||_2 \leq ||A||_F||v||_2$, 即 $||-||_F$ 与 $||-||_2$ 相容。
+
+        \item [(3)] $||A||_{M_\infty} := n\cdot \max_{i,j} |a_{ij}|$.
+        \begin{itemize}
+            \item [$p=1$:] 由例4.2.8(1)知, $||A||_1 = \max_{j} \sum_{i} |a_{ij}| = \sum_{i} |a_{ij^\prime}| \leq n\cdot \max_i |a_{ij^\prime}| \leq n\cdot \max_{i,j} |a_{ij}| = ||A||_{M_\infty}$, 同(1)(2)的步骤可知，$||-||_{M_\infty}$ 与 $||-||_1$ 相容
+            \item [$p=2$:] 由(2)知, $||A||_2 \leq ||A||_F = \sqrt{\sum_{i,j} |a_{ij}|^2}\leq \sqrt{{n^2\cdot (\max_{i,j} |a_{ij}|)^2}} = ||A||_{M_\infty}$. 再同(1)(2)可得 $||-||_{M_\infty}$ 与 $||-||_2$ 相容
+            \item [$p=\infty$:] 由例4.2.8(3)知, $||A||_\infty = \max_{i} \sum_{j} |a_{ij}|$, 完全仿照 $p=1$ 的情况即得 $||-||_{M_\infty}$ 与 $||-||_{\infty}$ 相容
+        \end{itemize}
+    \end{itemize}
+    
+    \item [2.] 习题7 
+    
+    考虑对 $A\in M_n(\mathbb{C})$ 作奇异值分解，即 $A = USV$, 其中 $U, V$ 是酉矩阵，$S = \mathtt{diag}(s_A)$, $s_A(1), \cdots, s_A(n)$ 是 $A$ 的全体奇异值。由于 $||-||$ 是酉不变的，所以 $||A|| = ||USV|| = ||S||$. 
+
+    按如下方式定义 $\mathbb{R}^n$ 上的范数 $N$: $N(v) := ||\mathtt{diag}(v)||$. 由于矩阵范数 $||-||$ 满足向量范数的各个要求，所以这样定义出来的 $N$ 也满足向量范数的要求，且显然有 $||A|| = ||S|| = ||\mathtt{diag}(s_A)|| = N(s_A)$.
+    
+    \item [3.] 习题8 
+    
+    对于任意的 $x, y \in \mathbb{R}^{+}, \lambda \in [0, 1]$, $N\left(\lambda x + (1-\lambda)y\right) = ||A + \left( \lambda x + (1-\lambda) y \right) B|| = ||\lambda A + \lambda xB + (1-\lambda)A + (1-\lambda)y B|| \leq ||\lambda A + \lambda x B|| + ||(1-\lambda)A + (1-\lambda)yB|| = \lambda N(x) + (1-\lambda) N(y) $, 这就验证了 $N(x)$ 是凸函数
+    
+
+\end{itemize}
+    
+\end{spacing}
+
+\end{document}
